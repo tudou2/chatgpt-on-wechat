@@ -20,10 +20,7 @@ from plugins import *
 COMMANDS = {
     "help": {
         "alias": ["help", "帮助"],
-        "desc": "请不要使用chatgpt询问涉及个人隐私和敏感问题。敏感词会进行屏蔽 \
-        使用技巧\n1、输入内容中含‘每日新闻’可获取当日新闻；含‘每日摄影’可获取每日的一张摄影作品 \
-        2、关键字画开头将触发画图，目前需要以特殊的格式输入【画 <模型>:prompt】 \
-        3、输入‘画修复’可触发修复人像功能，会提示上传一张照片",
+        "desc": "输出本帮助",
     },
     "helpp": {
         "alias": ["help", "帮助"],  # 与help指令共用别名，根据参数数量区分
@@ -212,6 +209,13 @@ class Godcmd(Plugin):
         content = e_context["context"].content
         logger.debug("[Godcmd] on_handle_context. content: %s" % content)
         if content.startswith("#"):
+            if len(content) == 1:
+                reply = Reply()
+                reply.type = ReplyType.ERROR
+                reply.content = f"空指令，输入#help查看指令列表\n"
+                e_context["reply"] = reply
+                e_context.action = EventAction.BREAK_PASS
+                return 
             # msg = e_context['context']['msg']
             channel = e_context["channel"]
             user = e_context["context"]["receiver"]
