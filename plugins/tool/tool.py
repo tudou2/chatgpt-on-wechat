@@ -184,6 +184,7 @@ class Tool(Plugin):
 
             # for visual_dl tool
             "cuda_device": kwargs.get("cuda_device", "cpu"),
+
             # for browser tool
             "phantomjs_exec_path": kwargs.get("phantomjs_exec_path", ""),
 
@@ -192,6 +193,11 @@ class Tool(Plugin):
 
             # for wolfram-alpha tool
             "wolfram_alpha_appid": kwargs.get("wolfram_alpha_appid", wolfram_alpha_appid),
+
+            "think_depth": kwargs.get("think_depth", 3),
+            "arxiv_summary": kwargs.get("arxiv_summary", True),
+            "morning_news_use_llm": kwargs.get("morning_news_use_llm", False),
+
         }
 
     def _filter_tool_list(self, tool_list: list):
