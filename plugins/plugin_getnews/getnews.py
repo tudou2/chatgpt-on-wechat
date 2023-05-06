@@ -55,7 +55,7 @@ class getnews(Plugin):
             e_context['reply'] = reply
             e_context.action = EventAction.BREAK_PASS # 事件结束，并跳过处理context的默认逻辑
             
-        if re.match(r"我是.*", content):
+        if re.match(r"我是.*", content) and len(content) <= 12:
             reply = Reply()
             reply.type = ReplyType.TEXT
             
