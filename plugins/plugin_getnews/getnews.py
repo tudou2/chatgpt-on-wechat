@@ -72,7 +72,7 @@ class getnews(Plugin):
             news_date = news_json['data']['last_update']
             
             output = news_date + ' 更新\n'
-            for i in range(15):
+            for i in range(min(len(news_json['data']['list']), 15)):
                 item = f'%2s.' %str(i+1) + news_json['data']['list'][i]['title'] + ' / '+ news_json['data']['list'][i]['other'] + '\n'
                 output= output + item
 
@@ -156,5 +156,5 @@ class getnews(Plugin):
         #     e_context.action = EventAction.CONTINUE  # 事件继续，交付给下个插件或默认逻辑
 
     def get_help_text(self, **kwargs):
-        help_text = "输入今日新闻，获取今天新闻\n输入今日图片，获取今日摄影"
+        help_text = "输入今日新闻，获取今天新闻\n输入今日图片，获取今日摄影\n输入微博，获取微博热榜"
         return help_text
