@@ -55,6 +55,32 @@ class getnews(Plugin):
             e_context['reply'] = reply
             e_context.action = EventAction.BREAK_PASS # 事件结束，并跳过处理context的默认逻辑
             
+        if re.search(r"微博|weibo|wb", content) and len(content) <= 5:
+            reply = Reply()
+            reply.type = ReplyType.TEXT
+
+            #接口信息 https://tophub.today/ | https://www.alapi.cn/api/view/49
+            
+            url = "https://v2.alapi.cn/api/tophub"
+            headers = {'Content-Type': "application/x-www-form-urlencoded"}
+            payload = "token="+getnews_api_token+"&id=KqndgxeLl9"
+
+            #获取新闻
+            req = requests.request("POST", url, data=payload, headers=headers)
+            news_json = json.loads(req.text) 
+            
+            news_date = news_json['data']['last_update']
+            
+            output = news_date + ' 更新\n'
+            for i in range(15):
+                item = f'%2s.' %str(i+1) + news_json['data']['list'][i]['title'] + ' / '+ news_json['data']['list'][i]['other'] + '\n'
+                output= output + item
+
+            reply.content = output
+            
+            e_context['reply'] = reply
+            e_context.action = EventAction.BREAK_PASS # 事件结束，并跳过处理context的默认逻辑
+            
         if re.match(r"我是.*", content) and len(content) <= 12:
             reply = Reply()
             reply.type = ReplyType.TEXT
