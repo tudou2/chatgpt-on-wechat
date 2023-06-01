@@ -55,7 +55,7 @@ class getnews(Plugin):
             e_context['reply'] = reply
             e_context.action = EventAction.BREAK_PASS # 事件结束，并跳过处理context的默认逻辑
         
-        if content == "请重试" OR re.match(r"。.*", content):
+        if content == "请重试" or re.match(r"。.*", content):
             e_context.action = EventAction.BREAK_PASS # 事件结束，并跳过处理context的默认逻辑
             
         if re.search(r"微博|weibo|wb", content) and len(content) <= 5:
