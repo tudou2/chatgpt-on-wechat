@@ -29,10 +29,8 @@ class BDunit(Plugin):
     def __init__(self):
         super().__init__()
         try:
-            curdir = os.path.dirname(__file__)
-            config_path = os.path.join(curdir, "config.json")
-            conf = None
-            if not os.path.exists(config_path):
+            conf = super().load_config()
+            if not conf:
                 raise Exception("config.json not found")
             else:
                 with open(config_path, "r") as f:
@@ -45,7 +43,7 @@ class BDunit(Plugin):
             self.service_id = os.environ.get("bdubit_service_id","")
             self.api_key = os.environ.get("bdubit_api_key","")
             self.secret_key = os.environ.get("bdubit_secret_key","")
-            
+
             self.access_token = self.get_token()
             self.handlers[Event.ON_HANDLE_CONTEXT] = self.on_handle_context
             logger.info("[BDunit] inited")
