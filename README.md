@@ -13,11 +13,6 @@
 
 > 欢迎接入更多应用，参考 [Terminal代码](https://github.com/zhayujie/chatgpt-on-wechat/blob/master/channel/terminal/terminal_channel.py)实现接收和发送消息逻辑即可接入。 同时欢迎增加新的插件，参考 [插件说明文档](https://github.com/zhayujie/chatgpt-on-wechat/tree/master/plugins)。
 
-**一键部署:**
-- 个人微信
-  
-  [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/qApznZ?referralCode=RC3znh)
-
 # 演示
 
 https://user-images.githubusercontent.com/26161723/233777277-e3b9928e-b88f-43e2-b0e0-3cbc923bc799.mp4
@@ -32,7 +27,7 @@ Demo made by [Visionn](https://www.wangpc.cc/)
 
 # 更新日志
 
->**2023.06.12：** 接入 [LinkAI](https://chat.link-ai.tech/console) 平台，可在线创建 个人知识库，并接入微信中。Beta版本欢迎体验，使用参考 [接入文档](https://link-ai.tech/platform/link-app/wechat)。
+>**2023.06.12：** 接入 [LinkAI](https://chat.link-ai.tech/console) 平台，可在线创建 个人知识库，并接入微信、公众号及企业微信中。使用参考 [接入文档](https://link-ai.tech/platform/link-app/wechat)。
 
 >**2023.04.26：** 支持企业微信应用号部署，兼容插件，并支持语音图片交互，私人助理理想选择，[使用文档](https://github.com/zhayujie/chatgpt-on-wechat/blob/master/channel/wechatcom/README.md)。(contributed by [@lanvent](https://github.com/lanvent) in [#944](https://github.com/zhayujie/chatgpt-on-wechat/pull/944))
 
@@ -231,13 +226,27 @@ sudo docker compose up -d
 sudo docker logs -f chatgpt-on-wechat
 ```
 
+#### (3) 插件使用
+
+如果需要在docker容器中修改插件配置，可通过挂载的方式完成，将 [插件配置文件](https://github.com/zhayujie/chatgpt-on-wechat/blob/master/plugins/config.json.template)
+重命名为 `config.json`，放置于 `docker-compose.yml` 相同目录下，并在 `docker-compose.yml` 中的 `chatgpt-on-wechat` 部分下添加 `volumes` 映射:
+
+```
+volumes:
+  - ./config.json:/app/plugins/config.json
+```
+
 ### 4. Railway部署
 
-> Railway每月提供5刀和最多500小时的免费额度。
+> Railway 每月提供5刀和最多500小时的免费额度。 (07.11更新: 目前大部分账号已无法免费部署)
 
 1. 进入 [Railway](https://railway.app/template/qApznZ?referralCode=RC3znh)
 2. 点击 `Deploy Now` 按钮。
 3. 设置环境变量来重载程序运行的参数，例如`open_ai_api_key`, `character_desc`。
+
+**一键部署:**
+  
+  [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/qApznZ?referralCode=RC3znh)
 
 ## 常见问题
 

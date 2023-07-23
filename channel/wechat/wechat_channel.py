@@ -53,7 +53,7 @@ def _check(func):
         if msgId in self.receivedMsgs:
             logger.info("Wechat message {} already received, ignore".format(msgId))
             return
-        self.receivedMsgs[msgId] = cmsg
+        self.receivedMsgs[msgId] = True
         create_time = cmsg.create_time  # 消息时间戳
         if conf().get("hot_reload") == True and int(create_time) < int(time.time()) - 60:  # 跳过1分钟前的历史消息
             logger.debug("[WX]history message {} skipped".format(msgId))
@@ -105,7 +105,7 @@ class WechatChannel(ChatChannel):
 
     def __init__(self):
         super().__init__()
-        self.receivedMsgs = ExpiredDict(60 * 60 * 24)
+        self.receivedMsgs = ExpiredDict(60 * 60)
 
     def startup(self):
         itchat.instance.receivingRetryCount = 600  # 修改断线超时时间
@@ -159,7 +159,7 @@ class WechatChannel(ChatChannel):
     @_check
     def handle_group(self, cmsg: ChatMessage):
         if cmsg.ctype == ContextType.VOICE:
-            if conf().get("speech_recognition") != True:
+            if conf().get("group_speech_recognition") != True:
                 return
             logger.debug("[WX]receive voice for group msg: {}".format(cmsg.content))
         elif cmsg.ctype == ContextType.IMAGE:
